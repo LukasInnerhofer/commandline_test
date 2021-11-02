@@ -3,13 +3,19 @@
 #include "libcommandline/flag.h"
 #include "libcommandline/interface.h"
 
-int main()
+int main(int argc, char const *argv[])
 {
-    NonNullSharedPtr<LibCommandLine::Flag> flag{'f'};
-    LibCommandLine::addOption(flag);
-    LibCommandLine::parse("utility_name -f");
-    if (flag)
+    auto f{LibUtilities::makeNonNullShared<LibCommandLine::Flag>('f')};
+    auto g{LibUtilities::makeNonNullShared<LibCommandLine::Flag>('g')};
+    LibCommandLine::addOption(f);
+    LibCommandLine::addOption(g);
+    LibCommandLine::parse(argc, argv);
+    if (*f)
     {
         std::cout << "-f is set\n";
+    }
+    if (*g)
+    {
+        std::cout << "-g is set\n";
     }
 }
